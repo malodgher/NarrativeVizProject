@@ -1,0 +1,10 @@
+.lineSet {
+	fill: none;
+	stroke-width: 1.5px;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+}
+
+#totalCases {
+	stroke: steelblue;
+}
