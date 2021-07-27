@@ -8,3 +8,28 @@
 #totalCases {
 	stroke: steelblue;
 }
+
+/* #totalDeaths {
+	stroke: #D62728;
+} */
+
+#changeCases {
+	stroke: #39FF14;
+}
+
+.allBars {
+	stroke-width: 0.2;
+	stroke: black;
+	box-sizing: inherit;
+	opacity: 0.85;
+}
+
+#caseRect rect { 
+	fill: steelblue;
+	/* display: none; */
+}
+
+#deathRect rect { 
+	fill: #D62728;
+	/* display: none; */
+}
