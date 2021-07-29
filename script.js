@@ -15,7 +15,7 @@ async function init() {
 	const xs = d3.scaleTime().domain(d3.extent(data, d => d.date)).range([0, 1300]);
 	const ys = d3.scaleLinear().domain([0, data[data.length - 1].cases]).range([500, 0]);
 	// const ds = d3.scaleLinear().domain([0, data[data.length - 1].deaths]).range([500, 0]);
-	const ds = d3.scaleLinear().domain([/* d3.min(change_data, d => d.cases) */0, d3.max(change_data, d => d.deaths)]).range([500, 0]);
+	// const ds = d3.scaleLinear().domain([/* d3.min(change_data, d => d.cases) */0, d3.max(change_data, d => d.deaths)]).range([500, 0]);
 	const cs = d3.scaleLinear().domain([/* d3.min(change_data, d => d.cases) */0, d3.max(change_data, d => d.cases)]).range([500, 0]);
 	
 	/*
@@ -33,20 +33,19 @@ async function init() {
 					.attr("width", (1300 + 2*(70)))
 					.attr("height", (500 + 2*(70))); */
 	
-	d3.select("#canvas").append("h1").text("Daily rate of COVID-19 Cases in the U.S., Jan 21, 2020 - Present");
-	
 	const change_svg = d3.select("#canvas").append("svg")
 					.attr("width", (1300 + 2*(70)))
 					.attr("height", (500 + 2*(70)));
 	
-	d3.select("#canvas").append("h1").text("Daily rate of COVID-19 Deaths in the U.S., Jan 21, 2020 - Present");
+	/*d3.select("#canvas").append("h1").text("Daily rate of COVID-19 Deaths in the U.S., Jan 21, 2020 - Present");
 	
 	const death_svg = d3.select("#canvas").append("svg")
 					.attr("width", (1300 + 2*(70)))
-					.attr("height", (500 + 2*(70)));
+					.attr("height", (500 + 2*(70)));*/
 	
 	
 	const dateFormat = d3.timeFormat("%m/%d/%Y")
+	const fileName = location.pathname.split("/").slice(-1)[0]
 	
 	svg.append("g").attr("transform", "translate(70,70)")
 		.append("path")
@@ -76,7 +75,7 @@ async function init() {
 			.attr("x", d => xs(d.date))
 			.attr("y", d => cs(d.cases))
 	
-	death_svg.append("g").attr("transform", "translate(70,70)")
+	/* death_svg.append("g").attr("transform", "translate(70,70)")
 		.attr("class", "allBars")
 		.attr("id", "deathRect")
 		.selectAll("rect")
@@ -84,16 +83,16 @@ async function init() {
 			.attr("width", 2)
 			.attr("height", function(d) { return (500 - ds(d.deaths)); })
 			.attr("x", d => xs(d.date))
-			.attr("y", d => ds(d.deaths))
+			.attr("y", d => ds(d.deaths)) */
 	
-	change_svg.append("g").attr("transform", "translate(70,70)")
+	/* change_svg.append("g").attr("transform", "translate(70,70)")
 		.append("path")
 			.datum(change_data)
 			.attr("class", "lineSet")
 			.attr("id", "changeCases")
 			.attr("d", d3.line()
 				.x(d => xs(d.date))
-				.y(d => cs(d.cases)));
+				.y(d => cs(d.cases))); */
 	
 	
 	svg.append("g")
@@ -112,12 +111,12 @@ async function init() {
 	
 	change_svg.append("g").attr("transform", "translate(70,70)").call(d3.axisLeft(cs));
 	
-	death_svg.append("g")
+	/* death_svg.append("g")
 		.attr("transform", "translate(70,570)") //translate(margin,height + margin)
 		.call(d3.axisBottom(xs)
 			.ticks(11)
 			.tickFormat(dateFormat));
 	
-	death_svg.append("g").attr("transform", "translate(70,70)").call(d3.axisLeft(ds));
+	death_svg.append("g").attr("transform", "translate(70,70)").call(d3.axisLeft(ds)); */
 	
 }

@@ -1,3 +1,30 @@
+.sceneNav {
+	background-color: #D62728;
+	overflow: hidden;
+	font-family: helvetica;
+	border-radius: 1.5em;
+}
+
+.sceneList{
+	list-style-type: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	margin: 0em;
+	padding: 0em;
+}
+
+.sceneList li{
+	padding: 0.7em;
+	font-size: 1.4em;
+	color: #E8E8E8;
+}
+
+#active {
+	color: black;
+	background-color: steelblue;
+}
+
 .lineSet {
 	fill: none;
 	stroke-width: 1.5px;
@@ -29,7 +56,7 @@
 	/* display: none; */
 }
 
-#deathRect rect { 
+/* #deathRect rect { 
 	fill: #D62728;
 	/* display: none; */
-}
+} */
