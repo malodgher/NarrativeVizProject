@@ -8,12 +8,24 @@
 	
 	<body onload="init()">
 		
-		<h1>Number of COVID-19 Cases in the U.S., Jan 21, 2020 - Present</h1>
+		<h1>When and Where have COVID-19 cases been in the U.S.?</h1>
 		
-		<div id="canvas">
-			<select id="statesList">
-				<option disabled>---Select-an-Option---</option>
-			</select>
+		<div id="usCanvas"></div>
+		<br><br>
+		<div id="stateCanvas">
+			<div>
+				Please select a state:&nbsp;<select id="statesList">
+					<option disabled>---Select-an-Option---</option>
+				</select>
+			</div>
+		</div>
+		<br><br>
+		<div id="mapCanvas">
+			<div>
+				Please select a state:&nbsp;<select id="mapList">
+					<option disabled>---Select-an-Option---</option>
+				</select>
+			</div>
 		</div>
 		
 		<script type="text/javascript" src="script.js"></script>

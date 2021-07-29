@@ -1,3 +1,8 @@
+h1, #stateCanvas div, #mapCanvas div{
+	display: flex;
+	justify-content: center;
+}
+
 .lineSet {
 	fill: none;
 	stroke-width: 1.5px;
