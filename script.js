@@ -50,8 +50,7 @@ function lineSetup(line_svg, data, xs, ys, date_format) {
 	line_svg.append("g").attr("transform", "translate(70,70)")
 		.append("path")
 			.datum(data)
-			.attr("class", "lineSet")
-			.attr("id", "totalCases")
+			.attr("class", "lineSet totalCases")
 			.attr("d", d3.line()
 				.x(d => xs(d.date))
 				.y(d => ys(d.cases)));
@@ -68,11 +67,16 @@ function lineSetup(line_svg, data, xs, ys, date_format) {
 function changeSetup(change_svg, data, xs, cs, date_format) {
 	change_svg.append("g").attr("transform", "translate(70,70)")
 		.attr("class", "allBars")
-		.attr("id", "caseRect")
 		.selectAll("rect")
 		.data(data).enter().append("rect")
 			.attr("width", 2)
-			.attr("height", function(d) { return (500 - cs(d.cases)); })
+			.attr("height", function(d) {
+				if((500 - cs(d.cases)) < 0) {
+					return 0
+				} else {
+					return (500 - cs(d.cases))
+				}
+			})
 			.attr("x", d => xs(d.date))
 			.attr("y", d => cs(d.cases))
 	

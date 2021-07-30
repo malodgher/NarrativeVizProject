@@ -10,13 +10,9 @@ h1, #stateCanvas div, #mapCanvas div{
 	stroke-linecap: round;
 }
 
-#totalCases {
+.totalCases {
 	stroke: steelblue;
 }
-
-/* #totalDeaths {
-	stroke: #D62728;
-} */
 
 #changeCases {
 	stroke: #39FF14;
@@ -25,16 +21,7 @@ h1, #stateCanvas div, #mapCanvas div{
 .allBars {
 	stroke-width: 0.2;
 	stroke: black;
+	fill: steelblue;
 	box-sizing: inherit;
 	opacity: 0.85;
-}
-
-#caseRect rect { 
-	fill: steelblue;
-	/* display: none; */
-}
-
-#deathRect rect { 
-	fill: #D62728;
-	/* display: none; */
 }
