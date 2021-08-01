@@ -1,4 +1,4 @@
-h1, #stateCanvas div, #mapCanvas div{
+h1, #stateCanvas #stateSelect{
 	display: flex;
 	justify-content: center;
 }
@@ -14,14 +14,20 @@ h1, #stateCanvas div, #mapCanvas div{
 	stroke: steelblue;
 }
 
-#changeCases {
-	stroke: #39FF14;
-}
-
 .allBars {
 	stroke-width: 0.2;
 	stroke: black;
 	fill: steelblue;
 	box-sizing: inherit;
 	opacity: 0.85;
+}
+
+.tooltip {
+	position: absolute;
+	text-align: center;
+	background-color: white;
+	border: 2px solid;
+	border-radius: 5px;
+	padding: 5px;
+	pointer-events: none;
 }
