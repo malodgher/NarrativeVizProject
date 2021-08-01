@@ -1,0 +1,54 @@
+@font-face {
+	font-family: "IBM Plex Sans Regular";
+	src: url(font/IBMPlexSans-Regular.ttf);
+	font-style: normal;
+	font-weight: 300;
+}
+
+body {
+	font-family: "IBM Plex Sans Regular";
+}
+
+h1, h2, #stateCanvas #stateSelect{
+	display: flex;
+	justify-content: center;
+}
+
+#stateSelect {
+	padding-top: 2.5em;
+	padding-bottom: 2.5em;
+}
+
+.line-set {
+	fill: none;
+	stroke-width: 1.5px;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+}
+
+.total-cases {
+	stroke: steelblue;
+}
+
+.all-bars {
+	stroke-width: 0.2;
+	stroke: black;
+	fill: steelblue;
+	box-sizing: inherit;
+	opacity: 0.85;
+}
+
+.tooltip {
+	position: absolute;
+	text-align: center;
+	background-color: white;
+	border: 2px solid;
+	border-radius: 5px;
+	padding: 5px;
+	pointer-events: none;
+}
+
+footer {
+	display: flex;
+	justify-content: space-evenly;
+}

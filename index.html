@@ -1,13 +1,47 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Narrative Visualization by Murtaza Lodgher</title>
-		<script src="https://d3js.org/d3.v5.min.js"></script>
+		<title>COVID-19 Narrative Visualization by Murtaza Lodgher</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script src="https://d3js.org/d3.v7.min.js"></script>
+		<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
 	</head>
 	
-	<body>
+	<body onload="init()">
 		
-		<h1>Initial Commit</h1>
+		<h1>COVID-19 cases in the U.S. vs. COVID-19 cases in U.S. states and territories</h1>
+		
+		<div id="usCanvas">
+			<p>The two charts below show: </p>
+			<ul>
+				<li>A line graph of the total number of COVID-19 cases in the United States each day since January 21, 2020</li>
+				<li>A bar chart of the rate of increase of COVID-19 cases in the United States each day since January 21, 2020</li>
+			</ul>
+			<p>Hover over the line chart to see how many total cases were reported on a specific day. Hover over a bar in the bar chart
+			to see, for a given day, what the increase in the number of cases were compared to the previous day. You can also use you mouse to zoom
+			in on an area in the bar chart</p>
+			<br>
+		</div>
+		<br><br>
+		<div id="stateCanvas">
+			<p>Use the dropdown menu below to select a U.S. state or terriory. The following charts will then show: </p>
+			<ul>
+				<li>A line graph of the total number of COVID-19 cases in the selected state/territory each day since the first recoded date of COVID-19 cases in that state/territory</li>
+				<li>A bar chart of the rate of increase of COVID-19 cases in the selected state/territory each day since since the first recoded date of COVID-19 cases in that state/territory</li>
+			</ul>
+			<p>The controls in the charts above also apply to the charts below. You can use the dropdown to change the selected state/territory, which will change the data shown in the charts below</p>
+			<div id="stateSelect">
+				Please select a state:&nbsp;<select id="statesList">
+					<option disabled>---Select-an-Option---</option>
+				</select>
+			</div>
+		</div>
+		
+		<footer>
+			<p>Author: Murtaza Lodgher</p>
+			<p>Email: lodgher2@illinois.edu</p>
+			<p>Data Source: <a href="https://github.com/nytimes/covid-19-data">New York Times COVID-19 Git Repository</a></p>
+		</footer>
 		
 		<script type="text/javascript" src="script.js"></script>
 	</body>
