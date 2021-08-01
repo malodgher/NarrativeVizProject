@@ -9,23 +9,28 @@ body {
 	font-family: "IBM Plex Sans Regular";
 }
 
-h1, #stateCanvas #stateSelect{
+h1, h2, #stateCanvas #stateSelect{
 	display: flex;
 	justify-content: center;
 }
 
-.lineSet {
+#stateSelect {
+	padding-top: 2.5em;
+	padding-bottom: 2.5em;
+}
+
+.line-set {
 	fill: none;
 	stroke-width: 1.5px;
 	stroke-linejoin: round;
 	stroke-linecap: round;
 }
 
-.totalCases {
+.total-cases {
 	stroke: steelblue;
 }
 
-.allBars {
+.all-bars {
 	stroke-width: 0.2;
 	stroke: black;
 	fill: steelblue;
