@@ -72,7 +72,8 @@ function lineSetup(line_svg, data, date_format) {
 			.attr("text-anchor", "end")
 			.attr("alignment-baseline", "middle")
 	
-	line_svg.append("path").attr("transform", "translate(70,70)")
+	line_svg.append("g").attr("transform", "translate(70,70)")
+		.append("path")
 			.datum(data)
 			.attr("class", "lineSet totalCases")
 			.attr("d", d3.line()
@@ -80,6 +81,12 @@ function lineSetup(line_svg, data, date_format) {
 				.y(d => ys(d.cases)));
 	
 	const focus = line_svg.append("g").attr("transform", "translate(70,70)").style("opacity", 0)
+	
+	if(data[0].state === undefined) {
+		lineAnnotation(line_svg, data, xs, ys, "Between approximately September 8th, 2020 to March 1st, 2021, the United States experienced a major spike in COVID-19 cases")
+	} else {
+		lineAnnotation(line_svg, data, xs, ys, "The majority of states and territories were also experiencing a spike in COVID-19 cases around this time, with some notable exceptions, such as Hawaii")
+	}
 	
 	line_svg.append("g")
 		.attr("transform", "translate(70,370)") //translate(margin,height + margin)
@@ -135,6 +142,36 @@ function lineSetup(line_svg, data, date_format) {
 		})
 }
 
+function lineAnnotation(line_svg, data, xs, ys, labelString) {
+	const annotations = [{
+		note: {
+			title: "The Big Spike",
+			label: labelString
+		},
+		
+		x: xs(data[data.findIndex(d => d.date.valueOf() === d3.timeParse("%Y-%m-%d")('2020-09-08').valueOf())].date),
+		y: ys(data[data.findIndex(d => d.date.valueOf() === d3.timeParse("%Y-%m-%d")('2020-09-08').valueOf())].cases),
+		dx: -100,
+		dy: -5,
+		subject: {
+			width: ((xs(data[data.findIndex(d => d.date.valueOf() === d3.timeParse("%Y-%m-%d")('2021-03-01').valueOf())].date)) - 
+					(xs(data[data.findIndex(d => d.date.valueOf() === d3.timeParse("%Y-%m-%d")('2020-09-08').valueOf())].date))),
+			height: ((ys(data[data.findIndex(d => d.date.valueOf() === d3.timeParse("%Y-%m-%d")('2021-03-01').valueOf())].cases)) - 
+							(ys(data[data.findIndex(d => d.date.valueOf() === d3.timeParse("%Y-%m-%d")('2020-09-08').valueOf())].cases)))
+		}
+	}]
+	
+	const makeAnnotations = d3.annotation()
+		.editMode(false)
+		.notePadding(15)
+		.type(d3.annotationCalloutRect)
+		.annotations(annotations)
+		
+	line_svg.append("g").attr("transform", "translate(70,70)")
+		.attr("class", "annotation-group")
+		.call(makeAnnotations)
+}
+
 function changeSetup(change_svg, data, date_format, tooltip) {
 	const xs = d3.scaleBand().domain(data.map(d => d.date)).range([0, 1200]);
 	const cs = d3.scaleLinear().domain([/* d3.min(change_data_us, d => d.cases) */0, d3.max(data, d => d.cases)]).range([300, 0]);
@@ -171,7 +208,7 @@ function changeSetup(change_svg, data, date_format, tooltip) {
 					tooltip.style("opacity", 1)
 				})
 			.on("mousemove", e => {
-				tooltip.html("Date: "+e.target.__data__.date.toLocaleDateString('en-US')+"<br>Rate of Increase: "+e.target.__data__.cases.toLocaleString("en-US")+" cases")
+				tooltip.html("Date: "+e.target.__data__.date.toLocaleDateString('en-US')+"<br>Rate of Increase from day before: "+e.target.__data__.cases.toLocaleString("en-US")+" cases")
 						.style("left", (e.pageX) + "px")
 						.style("top", (e.pageY) + "px")
 			})
