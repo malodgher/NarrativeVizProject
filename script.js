@@ -198,7 +198,7 @@ function changeSetup(change_svg, data, date_format, tooltip) {
 		.extent(extent)
 		.on("zoom", e => {
 			xs.range([0, 1200].map(d => e.transform.applyX(d)))
-			change_svg.selectAll(".allBars rect").attr("x", d => xs(d.date)).attr("width", xs.bandwidth())
+			change_svg.selectAll(".all-bars rect").attr("x", d => xs(d.date)).attr("width", xs.bandwidth())
 			change_svg.selectAll(".x-axis").call(d3.axisBottom(xs)
 				.tickValues(xs.domain().filter((d, i) => !(i%64)))
 				.tickFormat(date_format))
