@@ -9,9 +9,14 @@ body {
 	font-family: "IBM Plex Sans Regular";
 }
 
-h1, h2, #stateCanvas #stateSelect{
+h1, h2, #stateCanvas #stateSelect {
 	display: flex;
 	justify-content: center;
+}
+
+svg {
+	display: block;
+	margin: auto;
 }
 
 #stateSelect {

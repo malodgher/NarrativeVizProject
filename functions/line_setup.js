@@ -54,7 +54,7 @@ function lineSetup(line_svg, data, date_format) {
 		.on("mousemove", e => {
 			//Uses x,y position of event pointer to get a date and get the index of that date using bisect
 			//Then uses the conditional to determine if the position data is outputted or the data before it in the array is outputted
-			let x0 = xs.invert((d3.pointer(e, this)[0]) - 78), // -78 is used since the x position is offset by about 78 pixels using d3.pointer
+			let x0 = xs.invert((d3.pointer(e, this)[0])), // xs.invert((d3.pointer(e, this)[0]) - 78) is used when script.js is read as text/javascript since the x position is offset by about 78 pixels using d3.pointer
 				i = bisectDate(data, x0, 1),
 				d0 = data[i - 1],
 				d1 = data[i],

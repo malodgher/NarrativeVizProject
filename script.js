@@ -75,3 +75,5 @@ function initDropdown(dropdown, list) {
 		dropdown.appendChild(opt)
 	})
 }
+
+init()
