@@ -1,12 +1,12 @@
-function lineSetup(line_svg, data, date_format) {
-	const bisectDate = d3.bisector(d => d.date).left //Look up D3 documentation API for info on d3.bisector
+export function lineSetup(line_svg, data, date_format) {
+	const bisectDate = d3.bisector(d => d.date).left; //Look up D3 documentation API for info on d3.bisector
 	const xs = d3.scaleTime().domain(d3.extent(data, d => d.date)).range([0, 1200]);
-	const ys = d3.scaleLinear().domain([0, data[data.length - 1].cases]).range([300, 0])
+	const ys = d3.scaleLinear().domain([0, data[data.length - 1].cases]).range([300, 0]);
 	
 	const focusText = line_svg.append("g").attr("transform", "translate(70,70)")
 		.append("text")
 			.attr("text-anchor", "end")
-			.attr("alignment-baseline", "middle")
+			.attr("alignment-baseline", "middle");
 	
 	line_svg.append("g").attr("transform", "translate(70,70)")
 		.append("path") //Line is added in canvas
@@ -15,13 +15,14 @@ function lineSetup(line_svg, data, date_format) {
 			.attr("d", d3.line()
 				.x(d => xs(d.date))
 				.y(d => ys(d.cases)));
+
 	
-	const focus = line_svg.append("g").attr("transform", "translate(70,70)").style("opacity", 0)
+	const focus = line_svg.append("g").attr("transform", "translate(70,70)").style("opacity", 0);
 	
 	if(data[0].state === undefined) {
-		lineAnnotation(line_svg, data, xs, ys, "Between approximately September 8th, 2020 to March 1st, 2021, the United States experienced a major spike in COVID-19 cases")
+		lineAnnotation(line_svg, data, xs, ys, "Between approximately September 8th, 2020 to March 1st, 2021, the United States experienced a major spike in COVID-19 cases");
 	} else {
-		lineAnnotation(line_svg, data, xs, ys, "The majority of states and territories were also experiencing a spike in COVID-19 cases around this time, with some notable exceptions, such as Hawaii")
+		lineAnnotation(line_svg, data, xs, ys, "The majority of states and territories were also experiencing a spike in COVID-19 cases around this time, with some notable exceptions, such as Hawaii");
 	}
 	
 	
@@ -36,10 +37,10 @@ function lineSetup(line_svg, data, date_format) {
 	focus.append("circle")
 		.style("fill", "steelblue")
 		.style("stroke", "steelblue")
-		.attr("r", 4)
+		.attr("r", 4);
 	
-	focusText.append("tspan").attr("id", "tspan1")
-	focusText.append("tspan").attr("id", "tspan2")
+	focusText.append("tspan").attr("id", "tspan1");
+	focusText.append("tspan").attr("id", "tspan2");
 	
 	//Tooltip creation. Creates invisible rect object with same bounds as the svg canvas for the tooltip to traverse the line through
 	line_svg.append("rect").attr("transform", "translate(70,70)")
@@ -48,37 +49,41 @@ function lineSetup(line_svg, data, date_format) {
 		.style("fill", "none")
 		.style("pointer-events", "all")
 		.on("mouseover", e => {
-			focus.style("opacity", 1)
-			focusText.style("opacity", 1)
+			focus.style("opacity", 1);
+			focusText.style("opacity", 1);
 		})
 		.on("mousemove", e => {
 			//Uses x,y position of event pointer to get a date and get the index of that date using bisect
 			//Then uses the conditional to determine if the position data is outputted or the data before it in the array is outputted
 			let x0 = xs.invert((d3.pointer(e, this)[0])), // xs.invert((d3.pointer(e, this)[0]) - 78) is used when script.js is read as text/javascript since the x position is offset by about 78 pixels using d3.pointer
 				i = bisectDate(data, x0, 1),
-				d0 = data[i - 1],
-				d1 = data[i],
-				d = (x0 - d0.date > d1.date - x0) ? d1 : d0
+				d = null;
 			
+			if(data[i] === undefined) {
+				d = data[i - 1];
+			} else {
+				d = (x0 - data[i - 1].date > data[i].date - x0) ? data[i] : data[i - 1];
+			}
+
 			focus.select("circle")
 				.attr("cx", xs(d.date))
-				.attr("cy", ys(d.cases))
+				.attr("cy", ys(d.cases));
 			
 			focusText.select("#tspan1")
 				.html("Date: "+d.date.toLocaleDateString('en-US'))
 					.attr("x", xs(d.date) - 15) //15, 20, and 5 are arbitrary pixel numbers. No formula involved as to why those numbers are used
-					.attr("y", ys(d.cases) - 20)
+					.attr("y", ys(d.cases) - 20);
 			
 			
 			focusText.select("#tspan2")
 				.html("Number of Cases: "+d.cases.toLocaleString('en-US')+" cases")
 					.attr("x", xs(d.date) - 15)
-					.attr("y", ys(d.cases) - 5)
+					.attr("y", ys(d.cases) - 5);
 		})
 		.on("mouseout", e => {
-			focus.style("opacity", 0)
-			focusText.style("opacity", 0)
-		})
+			focus.style("opacity", 0);
+			focusText.style("opacity", 0);
+		});
 }
 
 function lineAnnotation(line_svg, data, xs, ys, labelString) {
@@ -104,18 +109,15 @@ function lineAnnotation(line_svg, data, xs, ys, labelString) {
 			height: ((ys(data[data.findIndex(d => d.date.valueOf() === d3.timeParse("%Y-%m-%d")('2021-03-01').valueOf())].cases)) - 
 							(ys(data[data.findIndex(d => d.date.valueOf() === d3.timeParse("%Y-%m-%d")('2020-09-08').valueOf())].cases)))
 		}
-	}]
+	}];
 	
 	const makeAnnotations = d3.annotation()
 		.editMode(false)
 		.notePadding(15)
 		.type(d3.annotationCalloutRect)
-		.annotations(annotations)
+		.annotations(annotations);
 		
 	line_svg.append("g").attr("transform", "translate(70,70)")
 		.attr("class", "annotation-group")
-		.call(makeAnnotations)
+		.call(makeAnnotations);
 }
-
-
-export {lineSetup};

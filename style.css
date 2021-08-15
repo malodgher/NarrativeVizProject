@@ -40,7 +40,6 @@ svg {
 	stroke: black;
 	fill: steelblue;
 	box-sizing: inherit;
-	opacity: 0.85;
 }
 
 .tooltip {

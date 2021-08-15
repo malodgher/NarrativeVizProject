@@ -1,48 +1,47 @@
-function changeSetup(change_svg, data, date_format, tooltip) {
+export function changeSetup(change_svg, data, date_format, tooltip) {
 	const xs = d3.scaleBand().domain(data.map(d => d.date)).range([0, 1200]); //Used scaleBand instead of scaleLinear for zooming and using x.bandwidth
 	const cs = d3.scaleLinear().domain([/* d3.min(change_data_us, d => d.cases) */0, d3.max(data, d => d.cases)]).range([300, 0]);
 	
 	// Look up https://observablehq.com/@d3/zoomable-bar-chart for information on zoomable bar charts
 	
-	const extent = [[0, 0], [1200, 300]]
+	const extent = [[0, 0], [1200, 300]];
 	
 	change_svg.call(d3.zoom()
 		.scaleExtent([1, 8])
 		.translateExtent(extent)
 		.extent(extent)
 		.on("zoom", e => {
-			xs.range([0, 1200].map(d => e.transform.applyX(d)))
-			change_svg.selectAll(".all-bars rect").attr("x", d => xs(d.date)).attr("width", xs.bandwidth())
+			xs.range([0, 1200].map(d => e.transform.applyX(d)));
+			change_svg.selectAll(".all-bars rect").attr("x", d => xs(d.date)).attr("width", xs.bandwidth());
 			change_svg.selectAll(".x-axis").call(d3.axisBottom(xs)
 				.tickValues(xs.domain().filter((d, i) => !(i%64)))
-				.tickFormat(date_format))
-		}))
+				.tickFormat(date_format));
+		}));
 	
 	change_svg.append("g").attr("transform", "translate(70,70)")
 		.attr("class", "all-bars")
 		.selectAll("rect")
 		.data(data).enter().append("rect")
 			.attr("width", xs.bandwidth())
-			.attr("height", function(d) {
-				if((300 - cs(d.cases)) < 0) {
-					return 0
-				} else {
-					return (300 - cs(d.cases))
-				}
-			})
+			.attr("height", 0)
 			.attr("x", d => xs(d.date))
-			.attr("y", d => cs(d.cases))
+			.attr("y", 300)
 			.on("mouseover", e => {
 					tooltip.style("opacity", 1)
+							.html("Date: "+e.target.__data__.date.toLocaleDateString('en-US')+"<br>Rate of Increase from previous day: "+e.target.__data__.cases.toLocaleString("en-US")+" cases");
+					d3.select(e.target).style("stroke-width", 1.75);
 				})
 			.on("mousemove", e => {
-				tooltip.html("Date: "+e.target.__data__.date.toLocaleDateString('en-US')+"<br>Rate of Increase from day before: "+e.target.__data__.cases.toLocaleString("en-US")+" cases")
-						.style("left", (e.pageX) + "px")
-						.style("top", (e.pageY) + "px")
+				tooltip.style("left", (e.pageX) + "px")
+						.style("top", (e.pageY) + "px");
 			})
 			.on("mouseleave", e => {
-					tooltip.style("opacity", 0)
+					tooltip.style("opacity", 0);
+					d3.select(e.target).style("stroke-width", 0.2);
 				})
+			.transition().duration(3000).delay(500)
+				.attr("height", d => { return ((300 - cs(d.cases)) < 0) ? 0 : (300 - cs(d.cases)); })
+				.attr("y", d => cs(d.cases));
 	
 	change_svg.append("g")
 		.attr("transform", "translate(70,370)") //translate(margin,height + margin)
@@ -53,6 +52,3 @@ function changeSetup(change_svg, data, date_format, tooltip) {
 	
 	change_svg.append("g").attr("transform", "translate(70,70)").attr("class", "y-axis").call(d3.axisLeft(cs));
 }
-
-
-export {changeSetup};
