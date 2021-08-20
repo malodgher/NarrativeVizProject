@@ -17,40 +17,24 @@ async function init() {
 	//For this project the width of each svg canvas is 1200px, the height is 300px and the margins are 70px
 	
 	d3.select("#usCanvas").append("h2").text("Number of COVID-19 Cases in the U.S., 1/21/2020 - Present");
-	
-	const us_line_svg = d3.select("#usCanvas").append("svg")
-					.attr("width", (1200 + 2*(70)))
-					.attr("height", (300 + 2*(70)));
-	
+	const us_line_svg = initSVG("#usCanvas", (1200 + 2*(70)), (300 + 2*(70)));
 	d3.select("#usCanvas").append("h2").text("Rate of Increase of COVID-19 cases per day in the U.S., 1/21/2020 - Present");
+	const us_change_tooltip = initTooltip("#usCanvas") //Tooltip for bar chart is appended before bar chart svg. Very Important!
+	const us_change_svg = initSVG("#usCanvas", (1200 + 2*(70)), (300 + 2*(70)));
 	
-	const us_change_tooltip = d3.select("#usCanvas").append("div") //Tooltip for bar chart is appended before bar chart svg. Very Important!
-					.style("opacity", 0)
-					.attr("class", "tooltip");
-	
-	const us_change_svg = d3.select("#usCanvas").append("svg")
-					.attr("width", (1200 + 2*(70)))
-					.attr("height", (300 + 2*(70)));
-	
-	
+	/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 	
 	
 	d3.select("#stateCanvas").append("h2").attr("id", "stateLine");
-	
-	const state_line_svg = d3.select("#stateCanvas").append("svg")
-					.attr("width", (1200 + 2*(70)))
-					.attr("height", (300 + 2*(70)));
-	
+	const state_line_svg = initSVG("#stateCanvas", (1200 + 2*(70)), (300 + 2*(70)));
 	d3.select("#stateCanvas").append("h2").attr("id", "stateChange");
+	const state_change_tooltip = initTooltip("#stateCanvas") //Tooltip for bar chart is appended before bar chart svg. Very Important!
+	const state_change_svg = initSVG("#stateCanvas", (1200 + 2*(70)), (300 + 2*(70)));
 	
-	const state_change_tooltip = d3.select("#stateCanvas").append("div") //Tooltip for bar chart is appended before bar chart svg. Very Important!
-					.style("opacity", 0)
-					.attr("class", "tooltip");
+	/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 	
-	const state_change_svg = d3.select("#stateCanvas").append("svg")
-					.attr("width", (1200 + 2*(70)))
-					.attr("height", (300 + 2*(70)));
-	
+	const map_svg = initSVG("#mapCanvas", (1200 + 2*(70)), (300 + 2*(70)));
+	const map_tooltip = initTooltip("#mapCanvas"); //Tooltip for bar chart is appended before bar chart svg. Very Important!
 	
 	const date_format = d3.timeFormat("%m/%d/%Y");
 	
@@ -74,6 +58,26 @@ function initDropdown(dropdown, list) {
 		opt.innerHTML = d;
 		dropdown.appendChild(opt);
 	});
+}
+
+function initSVG(identifier, width, height) {
+	return d3.select(identifier).append("svg").attr("viewBox", "0 0 "+width+" "+height).attr("width", "93%");
+
+	/*
+		Using viewBox allows for scalable SVG canvases. You can set a width of the canvas to whatever width you wish,
+		but you don't need to set the height, as the browser will determine the height of the canvas based on what
+		is set in the viewBox attribute, as well as what you have set the width of the canvas to.
+
+
+		The old way of initializing svg:
+		return d3.select("#idOfHTMLTag").append("svg").attr("width", (1200 + 2*(70))).attr("height", (300 + 2*(70)));
+	*/
+}
+
+function initTooltip(identifier) {
+	return d3.select(identifier).append("div")
+				.style("opacity", 0)
+				.attr("class", "tooltip");
 }
 
 init();
