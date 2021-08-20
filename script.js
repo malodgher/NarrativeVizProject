@@ -13,6 +13,8 @@ async function init() {
 	
 	const state_dropdown = document.getElementById("statesList");
 	initDropdown(state_dropdown, states_all);
+
+	//const dateSelect = document.getElementById("dateList");
 	
 	//For this project the width of each svg canvas is 1200px, the height is 300px and the margins are 70px
 	
@@ -49,6 +51,10 @@ async function init() {
 		d3.select("#stateChange").html("");
 		loadStateSVG(state_line_svg, state_change_svg, data_states, event.target.value, date_format, state_change_tooltip);
 	});
+
+	/*dateSelect.addEventListener("input" , event => {
+		console.log(event.target.value)
+	})*/
 }
 
 function initDropdown(dropdown, list) {
