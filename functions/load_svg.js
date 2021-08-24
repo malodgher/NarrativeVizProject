@@ -1,5 +1,6 @@
 import { lineSetup } from './line_setup.js'
 import { changeSetup } from './change_setup.js'
+import { treemapSetup } from './treemap_setup.js';
 
 export function loadUSSVG(us_line_svg, us_change_svg, data_us, date_format, change_tooltip){
 	//Gets rate of change data from the main data source
@@ -35,4 +36,32 @@ export function loadStateSVG(state_line_svg, state_change_svg, data_states, stat
 	lineSetup(state_line_svg, data_single_state, date_format);
 	d3.select("#stateChange").text("Rate of Increase of COVID-19 cases per day in "+state+", "+data_single_state[0].date.toLocaleDateString('en-US')+" - Present");
 	changeSetup(state_change_svg, change_data_single_state, date_format, change_tooltip);
+}
+
+export function loadTreemapSVG (map_svg, data_states, map_tooltip, input_date, width, height) {
+
+	const state_date = data_states.filter(d => d.date.valueOf() === d3.timeParse("%Y-%m-%d")(input_date).valueOf()).map(d => {
+		const value = {
+			date: d.date,
+			state: d.state,
+			country: "United States",
+			fips: d.fips,
+			cases: d.cases,
+			deaths: d.deaths
+		};
+		return value;
+	});
+
+	state_date.unshift({
+		date: null,
+		state: "United States",
+		country: null,
+		fips: null,
+		cases: null,
+		deaths: null
+	});
+
+	d3.select("#treemapChange").text("Treemap of cases in the U.S. on "+d3.timeParse("%Y-%m-%d")(input_date).toLocaleDateString("en-US"));
+	treemapSetup(map_svg, state_date, map_tooltip, width, height);
+
 }

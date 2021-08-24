@@ -1,20 +1,18 @@
-import { loadUSSVG, loadStateSVG } from './functions/load_svg.js'
+import { loadUSSVG, loadStateSVG, loadTreemapSVG } from './functions/load_svg.js'
 
 async function init() {
 	const data_us = await d3.csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv", d => {
-		return { date : d3.timeParse("%Y-%m-%d")(d.date), cases : d.cases, deaths : d.deaths };
+		return { date : d3.timeParse("%Y-%m-%d")(d.date), cases : Number(d.cases), deaths : Number(d.deaths) };
 	});
 	
 	const data_states = await d3.csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv", d => {
-		return { date : d3.timeParse("%Y-%m-%d")(d.date), state : d.state, fips : d.fips, cases : d.cases, deaths : d.deaths };
+		return { date : d3.timeParse("%Y-%m-%d")(d.date), state : d.state, fips : d.fips, cases : Number(d.cases), deaths : Number(d.deaths) };
 	});
 	
 	const states_all = data_states.map(d => d.state).filter((d, i, arr) => arr.indexOf(d) === i).sort(); //Getting states from data and filtering out duplicates
 	
-	const state_dropdown = document.getElementById("statesList");
-	initDropdown(state_dropdown, states_all);
-
-	//const dateSelect = document.getElementById("dateList");
+	const state_dropdown = initDropdown("statesList", states_all);
+	const dateSelect =  initDateInput("dateList", data_us);
 	
 	//For this project the width of each svg canvas is 1200px, the height is 300px and the margins are 70px
 	
@@ -35,6 +33,7 @@ async function init() {
 	
 	/* ---------------------------------------------------------------------------------------------------------------------------------------------- */
 	
+	d3.select("#mapCanvas").append("h2").attr("id", "treemapChange");
 	const map_svg = initSVG("#mapCanvas", (1200 + 2*(70)), (300 + 2*(70)));
 	const map_tooltip = initTooltip("#mapCanvas"); //Tooltip for bar chart is appended before bar chart svg. Very Important!
 	
@@ -42,6 +41,7 @@ async function init() {
 	
 	loadUSSVG(us_line_svg, us_change_svg, data_us, date_format, us_change_tooltip);
 	loadStateSVG(state_line_svg, state_change_svg, data_states, state_dropdown.value, date_format, state_change_tooltip);
+	loadTreemapSVG(map_svg, data_states, map_tooltip, dateSelect.value, (1200 + 2*(70)), (300 + 2*(70)));
 	
 	state_dropdown.addEventListener("change", event => {
 		//Clears everything from state svg canvases and repopulates them with information about the newly selected state
@@ -52,18 +52,34 @@ async function init() {
 		loadStateSVG(state_line_svg, state_change_svg, data_states, event.target.value, date_format, state_change_tooltip);
 	});
 
-	/*dateSelect.addEventListener("input" , event => {
-		console.log(event.target.value)
-	})*/
+	dateSelect.addEventListener("change" , event => {
+		map_svg.selectAll("*").remove();
+		d3.select("treemapChange").html("");
+		loadTreemapSVG(map_svg, data_states, map_tooltip, event.target.value, (1200 + 2*(70)), (300 + 2*(70)));
+	})
 }
 
-function initDropdown(dropdown, list) {
+function initDropdown(id, list) {
+	const dropdown = document.getElementById(id);
+
 	list.map(d => {
 		let opt = document.createElement("option");
 		opt.value = d;
 		opt.innerHTML = d;
 		dropdown.appendChild(opt);
 	});
+
+	return dropdown;
+}
+
+function initDateInput(id, data) {
+	const date_input = document.getElementById(id);
+	date_input.min = data[0].date.toISOString().substring(0, 10);
+	date_input.max = data[data.length - 1].date.toISOString().substring(0, 10);
+	date_input.value = data[0].date.toISOString().substring(0, 10);
+	date_input.onkeydown = () => { return false };
+
+	return date_input;
 }
 
 function initSVG(identifier, width, height) {

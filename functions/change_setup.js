@@ -19,7 +19,7 @@ export function changeSetup(change_svg, data, date_format, tooltip) {
 		}));
 	
 	change_svg.append("g").attr("transform", "translate(70,70)")
-		.attr("class", "all-bars")
+		.attr("class", "all-rects all-bars")
 		.selectAll("rect")
 		.data(data).enter().append("rect")
 			.attr("width", xs.bandwidth())

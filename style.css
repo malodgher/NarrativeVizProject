@@ -9,7 +9,7 @@ body {
 	font-family: "IBM Plex Sans Regular";
 }
 
-h1, h2, #stateCanvas #stateSelect {
+h1, h2, #stateCanvas #stateSelect, #mapCanvas #dateSelect {
 	display: flex;
 	justify-content: center;
 }
@@ -19,7 +19,7 @@ svg {
 	margin: auto;
 }
 
-#stateSelect {
+#stateSelect, #dateSelect {
 	padding-top: 2.5em;
 	padding-bottom: 2.5em;
 }
@@ -29,17 +29,21 @@ svg {
 	stroke-width: 1.5px;
 	stroke-linejoin: round;
 	stroke-linecap: round;
+	stroke: steelblue;
 }
 
-.total-cases {
-	stroke: steelblue;
+.all-rects {
+	stroke: black;
+	fill: steelblue;
 }
 
 .all-bars {
 	stroke-width: 0.2;
-	stroke: black;
-	fill: steelblue;
 	box-sizing: inherit;
+}
+
+.tree-rects {
+	stroke-width: 1;
 }
 
 .tooltip {

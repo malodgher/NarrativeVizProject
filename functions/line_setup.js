@@ -11,7 +11,7 @@ export function lineSetup(line_svg, data, date_format) {
 	line_svg.append("g").attr("transform", "translate(70,70)")
 		.append("path") //Line is added in canvas
 			.datum(data)
-			.attr("class", "line-set total-cases")
+			.attr("class", "line-set")
 			.attr("d", d3.line()
 				.x(d => xs(d.date))
 				.y(d => ys(d.cases)));
