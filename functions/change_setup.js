@@ -19,9 +19,10 @@ export function changeSetup(change_svg, data, date_format, tooltip) {
 		}));
 	
 	change_svg.append("g").attr("transform", "translate(70,70)")
-		.attr("class", "all-rects all-bars")
+		.attr("class", "all-bars")
 		.selectAll("rect")
 		.data(data).enter().append("rect")
+			.attr("class", "stroke-inactive")
 			.attr("width", xs.bandwidth())
 			.attr("height", 0)
 			.attr("x", d => xs(d.date))
@@ -29,7 +30,7 @@ export function changeSetup(change_svg, data, date_format, tooltip) {
 			.on("mouseover", e => {
 					tooltip.style("opacity", 1)
 							.html("Date: "+e.target.__data__.date.toLocaleDateString('en-US')+"<br>Rate of Increase from previous day: "+e.target.__data__.cases.toLocaleString("en-US")+" cases");
-					d3.select(e.target).style("stroke-width", 1.75);
+					d3.select(e.target).attr("class", "stroke-active");
 				})
 			.on("mousemove", e => {
 				tooltip.style("left", (e.pageX) + "px")
@@ -37,7 +38,7 @@ export function changeSetup(change_svg, data, date_format, tooltip) {
 			})
 			.on("mouseleave", e => {
 					tooltip.style("opacity", 0);
-					d3.select(e.target).style("stroke-width", 0.2);
+					d3.select(e.target).attr("class", "stroke-inactive");
 				})
 			.transition().duration(3000).delay(500)
 				.attr("height", d => { return ((300 - cs(d.cases)) < 0) ? 0 : (300 - cs(d.cases)); })

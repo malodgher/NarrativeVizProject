@@ -8,7 +8,7 @@ export function treemapSetup(map_svg, state_date, map_tooltip, width, height) {
      * 
      */
 
-    const root = d3.stratify().id(d => d.state).parentId(d => d.country)(state_date);
+    const root = d3.stratify().id(d => d.state).parentId(d => d.region)(state_date); //Creates tree where the the region is the parent and the state is teh child
 	root.sum(d => +d.cases);
 
 	d3.treemap().size([width, height]).padding(0.75)(root);
@@ -16,7 +16,20 @@ export function treemapSetup(map_svg, state_date, map_tooltip, width, height) {
 	map_svg.selectAll("rect")
 		.data(root.leaves())
 		.join("rect")
-            .attr("class", "all-rects tree-rects")
+            .attr("class", d => {
+				switch(d.parent.id){
+					case "Northeast":
+						return "ne-tree-rects";
+					case "Midwest":
+						return "mw-tree-rects";
+					case "South":
+						return "south-tree-rects";
+					case "West":
+						return "west-tree-rects";
+					case "Territories":
+						return "terr-tree-rects";
+				}
+			})
 			.attr("x", d => d.x0)
 			.attr("y", d => d.y0)
 			.attr("width", d => d.x1 - d.x0)

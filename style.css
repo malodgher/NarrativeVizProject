@@ -26,21 +26,54 @@ svg {
 
 .line-set {
 	fill: none;
-	stroke-width: 1.5px;
+	stroke-width: 1.5;
 	stroke-linejoin: round;
 	stroke-linecap: round;
 	stroke: steelblue;
 }
 
-.all-rects {
-	fill: steelblue;
+/* ------------------------------------This section is for setting the colors of the treemap rects------------------------------------ */
+
+.ne-tree-rects {
+	fill: #5288b4;
 }
 
+.mw-tree-rects {
+	fill: #f0984b;
+}
+
+.south-tree-rects {
+	fill: #e05454;
+}
+
+.west-tree-rects {
+	fill: #54ad54;
+}
+
+.terr-tree-rects {
+	fill: #cccc60;
+}
+
+/* -------------------------------------------------End of the treemap rects section------------------------------------------------- */
+
+
+/* -----------------------------------This section is for setting the stoke of the bar graph rects----------------------------------- */
+
 .all-bars {
+	fill: steelblue;
 	stroke: black;
-	stroke-width: 0.2;
 	box-sizing: inherit;
 }
+
+.stroke-active {
+	stroke-width: 1.75;
+}
+
+.stroke-inactive {
+	stroke-width: 0.2;
+}
+
+/* ------------------------------------------------End of the bar graph rects section------------------------------------------------ */
 
 .tooltip {
 	position: absolute;
