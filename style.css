@@ -33,26 +33,22 @@ svg {
 }
 
 .all-rects {
-	stroke: black;
 	fill: steelblue;
 }
 
 .all-bars {
+	stroke: black;
 	stroke-width: 0.2;
 	box-sizing: inherit;
-}
-
-.tree-rects {
-	stroke-width: 1;
 }
 
 .tooltip {
 	position: absolute;
 	text-align: center;
 	background-color: white;
-	border: 2px solid;
-	border-radius: 5px;
-	padding: 5px;
+	border: .125em solid;
+	border-radius: .3125em;
+	padding: .3125em;
 	pointer-events: none;
 }
 

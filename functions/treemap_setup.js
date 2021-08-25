@@ -11,7 +11,7 @@ export function treemapSetup(map_svg, state_date, map_tooltip, width, height) {
     const root = d3.stratify().id(d => d.state).parentId(d => d.country)(state_date);
 	root.sum(d => +d.cases);
 
-	d3.treemap().size([width, height]).padding(1)(root);
+	d3.treemap().size([width, height]).padding(0.75)(root);
 
 	map_svg.selectAll("rect")
 		.data(root.leaves())

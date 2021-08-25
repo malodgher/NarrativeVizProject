@@ -74,9 +74,9 @@ function initDropdown(id, list) {
 
 function initDateInput(id, data) {
 	const date_input = document.getElementById(id);
-	date_input.min = data[0].date.toISOString().substring(0, 10);
+	date_input.min = data[0].date.toISOString().substring(0, 10); //Used substring here to take out timestamp of ISO string and keep date format
 	date_input.max = data[data.length - 1].date.toISOString().substring(0, 10);
-	date_input.value = data[0].date.toISOString().substring(0, 10);
+	date_input.value = data[Math.floor(data.length / 2)].date.toISOString().substring(0, 10); //value is set to value in middle of data array
 	date_input.onkeydown = () => { return false };
 
 	return date_input;
