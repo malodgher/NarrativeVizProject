@@ -35,13 +35,12 @@ async function init() {
 	
 	d3.select("#mapCanvas").append("h2").attr("id", "treemapChange");
 	const map_svg = initSVG("#mapCanvas", (1200 + 2*(70)), (300 + 2*(70)));
-	const map_tooltip = initTooltip("#mapCanvas"); //Tooltip for bar chart is appended before bar chart svg. Very Important!
 	
 	const date_format = d3.timeFormat("%m/%d/%Y");
 	
 	loadUSSVG(us_line_svg, us_change_svg, data_us, date_format, us_change_tooltip);
 	loadStateSVG(state_line_svg, state_change_svg, data_states, state_dropdown.value, date_format, state_change_tooltip);
-	loadTreemapSVG(map_svg, data_states, map_tooltip, dateSelect.value, (1200 + 2*(70)), (300 + 2*(70)));
+	loadTreemapSVG(map_svg, data_states, dateSelect.value, (1200 + 2*(70)), (300 + 2*(70)));
 	
 	state_dropdown.addEventListener("change", event => {
 		//Clears everything from state svg canvases and repopulates them with information about the newly selected state
@@ -55,7 +54,7 @@ async function init() {
 	dateSelect.addEventListener("change" , event => {
 		map_svg.selectAll("*").remove();
 		d3.select("treemapChange").html("");
-		loadTreemapSVG(map_svg, data_states, map_tooltip, event.target.value, (1200 + 2*(70)), (300 + 2*(70)));
+		loadTreemapSVG(map_svg, data_states, event.target.value, (1200 + 2*(70)), (300 + 2*(70)));
 	})
 }
 
