@@ -61,7 +61,7 @@ async function init() {
 function initDropdown(id, list) {
 	const dropdown = document.getElementById(id);
 
-	list.map(d => {
+	list.forEach(d => {
 		let opt = document.createElement("option");
 		opt.value = d;
 		opt.innerHTML = d;
