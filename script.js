@@ -62,7 +62,7 @@ function initDropdown(id, list) {
 	const dropdown = document.getElementById(id);
 
 	list.forEach(d => {
-		let opt = document.createElement("option");
+		const opt = document.createElement("option");
 		opt.value = d;
 		opt.innerHTML = d;
 		dropdown.appendChild(opt);
