@@ -14,7 +14,7 @@ export function changeSetup(change_svg, data, date_format, tooltip) {
 			xs.range([0, 1200].map(d => e.transform.applyX(d)));
 			change_svg.selectAll(".all-bars rect").attr("x", d => xs(d.date)).attr("width", xs.bandwidth());
 			change_svg.selectAll(".x-axis").call(d3.axisBottom(xs)
-				.tickValues(xs.domain().filter((d, i) => !(i%64)))
+				.tickValues(xs.domain().filter((d, i) => !(i%100)))
 				.tickFormat(date_format));
 		}));
 	
@@ -48,7 +48,7 @@ export function changeSetup(change_svg, data, date_format, tooltip) {
 		.attr("transform", "translate(70,370)") //translate(margin,height + margin)
 		.attr("class", "x-axis")
 		.call(d3.axisBottom(xs)
-			.tickValues(xs.domain().filter((d, i) => !(i%64))) //The filter function makes it so that the scale displays 1 in every 64 ticks. Only used for scaleBand
+			.tickValues(xs.domain().filter((d, i) => !(i%100))) //The filter function makes it so that the scale displays 1 in every 64 ticks. Only used for scaleBand
 			.tickFormat(date_format));
 	
 	change_svg.append("g").attr("transform", "translate(70,70)").attr("class", "y-axis").call(d3.axisLeft(cs));

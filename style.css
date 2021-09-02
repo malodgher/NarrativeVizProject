@@ -48,22 +48,27 @@ svg {
 
 .ne-tree-rects {
 	fill: #5288b4;
+	color: #5288b4;
 }
 
 .mw-tree-rects {
 	fill: #f0984b;
+	color: #f0984b;
 }
 
 .south-tree-rects {
 	fill: #e05454;
+	color: #e05454;
 }
 
 .west-tree-rects {
 	fill: #54ad54;
+	color: #54ad54;
 }
 
 .terr-tree-rects {
 	fill: #cccc60;
+	color: #cccc60;
 }
 
 .title-size {
