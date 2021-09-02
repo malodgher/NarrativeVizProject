@@ -14,7 +14,7 @@ export function changeSetup(change_svg, data, date_format, tooltip) {
 			xs.range([0, 1200].map(d => e.transform.applyX(d)));
 			change_svg.selectAll(".all-bars rect").attr("x", d => xs(d.date)).attr("width", xs.bandwidth());
 			change_svg.selectAll(".x-axis").call(d3.axisBottom(xs)
-				.tickValues(xs.domain().filter((d, i) => !(i%64)))
+				.tickValues(xs.domain().filter((d, i) => !(i%100)))
 				.tickFormat(date_format));
 		}));
 	
@@ -22,6 +22,7 @@ export function changeSetup(change_svg, data, date_format, tooltip) {
 		.attr("class", "all-bars")
 		.selectAll("rect")
 		.data(data).enter().append("rect")
+			.attr("class", "stroke-inactive")
 			.attr("width", xs.bandwidth())
 			.attr("height", 0)
 			.attr("x", d => xs(d.date))
@@ -29,7 +30,7 @@ export function changeSetup(change_svg, data, date_format, tooltip) {
 			.on("mouseover", e => {
 					tooltip.style("opacity", 1)
 							.html("Date: "+e.target.__data__.date.toLocaleDateString('en-US')+"<br>Rate of Increase from previous day: "+e.target.__data__.cases.toLocaleString("en-US")+" cases");
-					d3.select(e.target).style("stroke-width", 1.75);
+					d3.select(e.target).attr("class", "stroke-active");
 				})
 			.on("mousemove", e => {
 				tooltip.style("left", (e.pageX) + "px")
@@ -37,7 +38,7 @@ export function changeSetup(change_svg, data, date_format, tooltip) {
 			})
 			.on("mouseleave", e => {
 					tooltip.style("opacity", 0);
-					d3.select(e.target).style("stroke-width", 0.2);
+					d3.select(e.target).attr("class", "stroke-inactive");
 				})
 			.transition().duration(3000).delay(500)
 				.attr("height", d => { return ((300 - cs(d.cases)) < 0) ? 0 : (300 - cs(d.cases)); })
@@ -47,7 +48,7 @@ export function changeSetup(change_svg, data, date_format, tooltip) {
 		.attr("transform", "translate(70,370)") //translate(margin,height + margin)
 		.attr("class", "x-axis")
 		.call(d3.axisBottom(xs)
-			.tickValues(xs.domain().filter((d, i) => !(i%64))) //The filter function makes it so that the scale displays 1 in every 64 ticks. Only used for scaleBand
+			.tickValues(xs.domain().filter((d, i) => !(i%100))) //The filter function makes it so that the scale displays 1 in every 64 ticks. Only used for scaleBand
 			.tickFormat(date_format));
 	
 	change_svg.append("g").attr("transform", "translate(70,70)").attr("class", "y-axis").call(d3.axisLeft(cs));

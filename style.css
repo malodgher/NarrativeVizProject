@@ -9,9 +9,26 @@ body {
 	font-family: "IBM Plex Sans Regular";
 }
 
-h1, h2, #stateCanvas #stateSelect {
+h1, h2, #stateCanvas #stateSelect, #mapCanvas #dateSelect, footer {
 	display: flex;
+}
+
+h1, h2, #stateCanvas #stateSelect{
 	justify-content: center;
+}
+
+#mapCanvas #dateSelect {
+	flex-direction: column;
+	align-items: center;
+}
+
+#dateSlider {
+	width: 90%;
+}
+
+#stateSelect, #dateSelect {
+	padding-top: 2.5em;
+	padding-bottom: 2.5em;
 }
 
 svg {
@@ -19,40 +36,76 @@ svg {
 	margin: auto;
 }
 
-#stateSelect {
-	padding-top: 2.5em;
-	padding-bottom: 2.5em;
-}
-
 .line-set {
 	fill: none;
-	stroke-width: 1.5px;
+	stroke-width: 1.5;
 	stroke-linejoin: round;
 	stroke-linecap: round;
-}
-
-.total-cases {
 	stroke: steelblue;
 }
 
+/* ------------------------------------This section is for setting the colors of the treemap rects------------------------------------ */
+
+.ne-tree-rects {
+	fill: #5288b4;
+	color: #5288b4;
+}
+
+.mw-tree-rects {
+	fill: #f0984b;
+	color: #f0984b;
+}
+
+.south-tree-rects {
+	fill: #e05454;
+	color: #e05454;
+}
+
+.west-tree-rects {
+	fill: #54ad54;
+	color: #54ad54;
+}
+
+.terr-tree-rects {
+	fill: #cccc60;
+	color: #cccc60;
+}
+
+.title-size {
+	font-size: 0.85em;
+}
+
+/* -------------------------------------------------End of the treemap rects section------------------------------------------------- */
+
+
+/* -----------------------------------This section is for setting the stoke of the bar graph rects----------------------------------- */
+
 .all-bars {
-	stroke-width: 0.2;
-	stroke: black;
 	fill: steelblue;
+	stroke: black;
 	box-sizing: inherit;
 }
+
+.stroke-active {
+	stroke-width: 1.75;
+}
+
+.stroke-inactive {
+	stroke-width: 0.2;
+}
+
+/* ------------------------------------------------End of the bar graph rects section------------------------------------------------ */
 
 .tooltip {
 	position: absolute;
 	text-align: center;
 	background-color: white;
-	border: 2px solid;
-	border-radius: 5px;
-	padding: 5px;
+	border: .125em solid;
+	border-radius: .3125em;
+	padding: .3125em;
 	pointer-events: none;
 }
 
 footer {
-	display: flex;
 	justify-content: space-evenly;
 }
