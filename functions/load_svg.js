@@ -38,10 +38,10 @@ export function loadStateSVG(state_line_svg, state_change_svg, data_states, stat
 	changeSetup(state_change_svg, change_data_single_state, date_format, change_tooltip);
 }
 
-export function loadTreemapSVG (map_svg, data_states, input_date, width, height) {
+export function loadTreemapSVG(map_svg, data_states, input_date, width, height) {
 
 	//Filters state data by the input date, then adds hierarchy to the data by grouping states by region using FIPS codes
-	const state_date = data_states.filter(d => d.date.valueOf() === d3.timeParse("%Y-%m-%d")(input_date).valueOf()).map(d => {
+	const state_date = data_states.filter(d => d.date.valueOf() === input_date.valueOf()).map(d => {
 
 		if((d.fips === "09") || (d.fips === "23") || (d.fips === "25") || (d.fips === "33") || (d.fips === "34") || (d.fips === "36") || (d.fips === "42") || (d.fips === "44") || (d.fips === "50")) {
 
@@ -74,7 +74,7 @@ export function loadTreemapSVG (map_svg, data_states, input_date, width, height)
 		deaths: null
 	}, initValueOfData("nodata", "Northeast"), initValueOfData("nodata", "Midwest"), initValueOfData("nodata", "South"), initValueOfData("nodata", "West"), initValueOfData("nodata", "Territories"));
 
-	d3.select("#treemapChange").text("Treemap of cases in the U.S. on "+d3.timeParse("%Y-%m-%d")(input_date).toLocaleDateString("en-US"));
+	d3.select("#treemapChange").text("Treemap of cases in the U.S. on "+input_date.toLocaleDateString("en-US"));
 	treemapSetup(map_svg, state_date, width, height);
 
 }

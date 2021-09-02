@@ -9,19 +9,31 @@ body {
 	font-family: "IBM Plex Sans Regular";
 }
 
-h1, h2, #stateCanvas #stateSelect, #mapCanvas #dateSelect {
+h1, h2, #stateCanvas #stateSelect, #mapCanvas #dateSelect, footer {
 	display: flex;
+}
+
+h1, h2, #stateCanvas #stateSelect{
 	justify-content: center;
 }
 
-svg {
-	display: block;
-	margin: auto;
+#mapCanvas #dateSelect {
+	flex-direction: column;
+	align-items: center;
+}
+
+#dateSlider {
+	width: 90%;
 }
 
 #stateSelect, #dateSelect {
 	padding-top: 2.5em;
 	padding-bottom: 2.5em;
+}
+
+svg {
+	display: block;
+	margin: auto;
 }
 
 .line-set {
@@ -90,6 +102,5 @@ svg {
 }
 
 footer {
-	display: flex;
 	justify-content: space-evenly;
 }

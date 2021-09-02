@@ -12,7 +12,8 @@ async function init() {
 	const states_all = data_states.map(d => d.state).filter((d, i, arr) => arr.indexOf(d) === i).sort(); //Getting states from data and filtering out duplicates
 	
 	const state_dropdown = initDropdown("statesList", states_all);
-	const dateSelect =  initDateInput("dateList", data_us);
+	const dateSlider = initDateInput("dateSlider", data_us);
+
 	
 	//For this project the width of each svg canvas is 1200px, the height is 300px and the margins are 70px
 	
@@ -40,7 +41,7 @@ async function init() {
 	
 	loadUSSVG(us_line_svg, us_change_svg, data_us, date_format, us_change_tooltip);
 	loadStateSVG(state_line_svg, state_change_svg, data_states, state_dropdown.value, date_format, state_change_tooltip);
-	loadTreemapSVG(map_svg, data_states, dateSelect.value, (1200 + 2*(70)), (300 + 2*(70)));
+	loadTreemapSVG(map_svg, data_states, data_us[dateSlider.value].date, (1200 + 2*(70)), (300 + 2*(70)));
 	
 	state_dropdown.addEventListener("change", event => {
 		//Clears everything from state svg canvases and repopulates them with information about the newly selected state
@@ -51,10 +52,10 @@ async function init() {
 		loadStateSVG(state_line_svg, state_change_svg, data_states, event.target.value, date_format, state_change_tooltip);
 	});
 
-	dateSelect.addEventListener("change" , event => {
+	dateSlider.addEventListener("input" , event => {
 		map_svg.selectAll("*").remove();
 		d3.select("treemapChange").html("");
-		loadTreemapSVG(map_svg, data_states, event.target.value, (1200 + 2*(70)), (300 + 2*(70)));
+		loadTreemapSVG(map_svg, data_states, data_us[event.target.value].date, (1200 + 2*(70)), (300 + 2*(70)));
 	})
 }
 
@@ -73,10 +74,9 @@ function initDropdown(id, list) {
 
 function initDateInput(id, data) {
 	const date_input = document.getElementById(id);
-	date_input.min = data[0].date.toISOString().substring(0, 10); //Used substring here to take out timestamp of ISO string and keep date format
-	date_input.max = data[data.length - 1].date.toISOString().substring(0, 10);
-	date_input.value = data[Math.floor(data.length / 2)].date.toISOString().substring(0, 10); //value is set to value in middle of data array
-	date_input.onkeydown = () => { return false };
+	date_input.min = 0;
+	date_input.max = data.length - 1;
+	date_input.value = Math.floor(data.length / 2); //value is set to value in middle of data array
 
 	return date_input;
 }
