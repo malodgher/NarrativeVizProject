@@ -1,4 +1,4 @@
-export function changeSetup(change_svg, data, date_format, tooltip) {
+export const changeSetup = (change_svg, data, date_format, tooltip) => {
 	const xs = d3.scaleBand().domain(data.map(d => d.date)).range([0, 1200]); //Used scaleBand instead of scaleLinear for zooming and using x.bandwidth
 	const cs = d3.scaleLinear().domain([/* d3.min(change_data_us, d => d.cases) */0, d3.max(data, d => d.cases)]).range([300, 0]);
 	
