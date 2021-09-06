@@ -1,4 +1,4 @@
-export function lineSetup(line_svg, data, date_format) {
+export const lineSetup = (line_svg, data, date_format) => {
 	const bisectDate = d3.bisector(d => d.date).left; //Look up D3 documentation API for info on d3.bisector
 	const xs = d3.scaleTime().domain(d3.extent(data, d => d.date)).range([0, 1200]);
 	const ys = d3.scaleLinear().domain([0, data[data.length - 1].cases]).range([300, 0]);
@@ -86,7 +86,7 @@ export function lineSetup(line_svg, data, date_format) {
 		});
 }
 
-function lineAnnotation(line_svg, data, xs, ys, labelString) {
+const lineAnnotation = (line_svg, data, xs, ys, labelString) => {
 	/* Documentation for creating annotations found at https://d3-annotation.susielu.com/ */
 	const annotations = [{
 		note: {

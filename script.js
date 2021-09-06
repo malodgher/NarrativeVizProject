@@ -1,6 +1,6 @@
 import { loadUSSVG, loadStateSVG, loadTreemapSVG } from './functions/load_svg.js'
 
-async function init() {
+const init = async () => {
 	const data_us = await d3.csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv", d => {
 		return { date : d3.timeParse("%Y-%m-%d")(d.date), cases : Number(d.cases), deaths : Number(d.deaths) };
 	});
@@ -59,7 +59,7 @@ async function init() {
 	})
 }
 
-function initDropdown(id, list) {
+const initDropdown = (id, list) => {
 	const dropdown = document.getElementById(id);
 
 	list.forEach(d => {
@@ -72,7 +72,7 @@ function initDropdown(id, list) {
 	return dropdown;
 }
 
-function initDateInput(id, data) {
+const initDateInput = (id, data) => {
 	const date_input = document.getElementById(id);
 	date_input.min = 0;
 	date_input.max = data.length - 1;
@@ -81,7 +81,7 @@ function initDateInput(id, data) {
 	return date_input;
 }
 
-function initSVG(identifier, width, height) {
+const initSVG = (identifier, width, height) => {
 	return d3.select(identifier).append("svg").attr("viewBox", "0 0 "+width+" "+height).attr("width", "93%");
 
 	/*
@@ -95,7 +95,7 @@ function initSVG(identifier, width, height) {
 	*/
 }
 
-function initTooltip(identifier) {
+const initTooltip = (identifier) => {
 	return d3.select(identifier).append("div")
 				.style("opacity", 0)
 				.attr("class", "tooltip");

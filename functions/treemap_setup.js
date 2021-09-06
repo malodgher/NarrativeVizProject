@@ -1,4 +1,4 @@
-export function treemapSetup(map_svg, state_date, width, height) {
+export const treemapSetup = (map_svg, state_date, width, height) => {
     /**
      * View these exaples for d3 Treemaps:
      * 

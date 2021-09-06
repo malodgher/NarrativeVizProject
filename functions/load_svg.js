@@ -2,7 +2,7 @@ import { lineSetup } from './line_setup.js'
 import { changeSetup } from './change_setup.js'
 import { treemapSetup } from './treemap_setup.js';
 
-export function loadUSSVG(us_line_svg, us_change_svg, data_us, date_format, change_tooltip){
+export const loadUSSVG = (us_line_svg, us_change_svg, data_us, date_format, change_tooltip) => {
 	//Gets rate of change data from the main data source
 	const change_data_us = data_us.map((d, i, data_us) => {
 		const value = {
@@ -17,7 +17,7 @@ export function loadUSSVG(us_line_svg, us_change_svg, data_us, date_format, chan
 	changeSetup(us_change_svg, change_data_us, date_format, change_tooltip);
 }
 
-export function loadStateSVG(state_line_svg, state_change_svg, data_states, state, date_format, change_tooltip) {
+export const loadStateSVG = (state_line_svg, state_change_svg, data_states, state, date_format, change_tooltip) => {
 	//Filters main data source for data of the selected state and gets the rate of change data for that state
 	const data_single_state = data_states.filter(d => d.state === state);
 	
@@ -38,7 +38,7 @@ export function loadStateSVG(state_line_svg, state_change_svg, data_states, stat
 	changeSetup(state_change_svg, change_data_single_state, date_format, change_tooltip);
 }
 
-export function loadTreemapSVG(map_svg, data_states, input_date, width, height) {
+export const loadTreemapSVG = (map_svg, data_states, input_date, width, height) => {
 
 	//Filters state data by the input date, then adds hierarchy to the data by grouping states by region using FIPS codes
 	const state_date = data_states.filter(d => d.date.valueOf() === input_date.valueOf()).map(d => {
@@ -79,7 +79,7 @@ export function loadTreemapSVG(map_svg, data_states, input_date, width, height) 
 
 }
 
-function initValueOfData(d, region) {
+const initValueOfData = (d, region) => {
 
 	if (d === "nodata") {
 		const value = {
