@@ -17,7 +17,7 @@ const init = async () => {
 	
 	//For this project the width of each svg canvas is 1200px, the height is 300px and the margins are 70px
 	
-	d3.select("#usCanvas").append("h2").text("Number of COVID-19 Cases in the U.S., 1/21/2020 - Present");
+	d3.select("#usCanvas").append("h2").text("Number of COVID-19 cases in the U.S., 1/21/2020 - Present");
 	const us_line_svg = initSVG("#usCanvas", (1200 + 2*(70)), (300 + 2*(70)));
 	d3.select("#usCanvas").append("h2").text("Rate of Increase of COVID-19 cases per day in the U.S., 1/21/2020 - Present");
 	const us_change_tooltip = initTooltip("#usCanvas") //Tooltip for bar chart is appended before bar chart svg. Very Important!
@@ -82,7 +82,7 @@ const initDateInput = (id, data) => {
 }
 
 const initSVG = (identifier, width, height) => {
-	return d3.select(identifier).append("svg").attr("viewBox", "0 0 "+width+" "+height).attr("width", "93%");
+	return d3.select(identifier).append("svg").attr("viewBox", `0 0 ${width} ${height}`).attr("width", "93%");
 
 	/*
 		Using viewBox allows for scalable SVG canvases. You can set a width of the canvas to whatever width you wish,

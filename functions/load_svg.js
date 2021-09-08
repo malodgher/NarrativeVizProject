@@ -32,9 +32,9 @@ export const loadStateSVG = (state_line_svg, state_change_svg, data_states, stat
 		return value;
 	});
 	
-	d3.select("#stateLine").text("Number of COVID-19 Cases in "+state+", "+data_single_state[0].date.toLocaleDateString('en-US')+" - Present");
+	d3.select("#stateLine").text(`Number of COVID-19 cases in ${state}, ${data_single_state[0].date.toLocaleDateString('en-US')} - Present`);
 	lineSetup(state_line_svg, data_single_state, date_format);
-	d3.select("#stateChange").text("Rate of Increase of COVID-19 cases per day in "+state+", "+data_single_state[0].date.toLocaleDateString('en-US')+" - Present");
+	d3.select("#stateChange").text(`Rate of Increase of COVID-19 cases per day in ${state}, ${data_single_state[0].date.toLocaleDateString('en-US')} - Present`);
 	changeSetup(state_change_svg, change_data_single_state, date_format, change_tooltip);
 }
 
@@ -74,7 +74,7 @@ export const loadTreemapSVG = (map_svg, data_states, input_date, width, height) 
 		deaths: null
 	}, initValueOfData("nodata", "Northeast"), initValueOfData("nodata", "Midwest"), initValueOfData("nodata", "South"), initValueOfData("nodata", "West"), initValueOfData("nodata", "Territories"));
 
-	d3.select("#treemapChange").text("Treemap of cases in the U.S. on "+input_date.toLocaleDateString("en-US"));
+	d3.select("#treemapChange").text(`Treemap of cases in the U.S. on ${input_date.toLocaleDateString("en-US")}`);
 	treemapSetup(map_svg, state_date, width, height);
 
 }

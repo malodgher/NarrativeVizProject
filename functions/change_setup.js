@@ -29,12 +29,12 @@ export const changeSetup = (change_svg, data, date_format, tooltip) => {
 			.attr("y", 300)
 			.on("mouseover", e => {
 					tooltip.style("opacity", 1)
-							.html("Date: "+e.target.__data__.date.toLocaleDateString('en-US')+"<br>Rate of Increase from previous day: "+e.target.__data__.cases.toLocaleString("en-US")+" cases");
+							.html(`Date: ${e.target.__data__.date.toLocaleDateString('en-US')}<br>Rate of Increase from previous day: ${e.target.__data__.cases.toLocaleString("en-US")} cases`);
 					d3.select(e.target).attr("class", "stroke-active");
 				})
 			.on("mousemove", e => {
-				tooltip.style("left", (e.pageX) + "px")
-						.style("top", (e.pageY) + "px");
+				tooltip.style("left", `${e.pageX}px`)
+						.style("top", `${e.pageY}px`);
 			})
 			.on("mouseleave", e => {
 					tooltip.style("opacity", 0);

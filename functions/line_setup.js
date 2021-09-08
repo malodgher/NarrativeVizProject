@@ -70,13 +70,13 @@ export const lineSetup = (line_svg, data, date_format) => {
 				.attr("cy", ys(d.cases));
 			
 			focusText.select("#tspan1")
-				.html("Date: "+d.date.toLocaleDateString('en-US'))
+				.html(`Date: ${d.date.toLocaleDateString('en-US')}`)
 					.attr("x", xs(d.date) - 15) //15, 20, and 5 are arbitrary pixel numbers. No formula involved as to why those numbers are used
 					.attr("y", ys(d.cases) - 20);
 			
 			
 			focusText.select("#tspan2")
-				.html("Number of Cases: "+d.cases.toLocaleString('en-US')+" cases")
+				.html(`Number of Cases: ${d.cases.toLocaleString('en-US')} cases`)
 					.attr("x", xs(d.date) - 15)
 					.attr("y", ys(d.cases) - 5);
 		})

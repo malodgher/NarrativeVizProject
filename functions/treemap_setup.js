@@ -8,15 +8,15 @@ export const treemapSetup = (map_svg, state_date, width, height) => {
      * 
      */
 
-    const root = d3.stratify().id(d => d.state).parentId(d => d.region)(state_date); // Creates tree where the the region is the parent and the state is teh child
+    const root = d3.stratify().id(d => d.state).parentId(d => d.region)(state_date); // Creates tree where the the region is the parent and the state is the child
 	root.sum(d => +d.cases);
 
 	d3.treemap().size([width, height]).padding(0.75)(root);
 
-	const state_leaves = map_svg.selectAll("g").data(root.leaves()).enter().append("g").attr("transform", d => ("translate(" + d.x0 + "," + d.y0 + ")" ));
+	const state_leaves = map_svg.selectAll("g").data(root.leaves()).enter().append("g").attr("transform", d => `translate(${d.x0},${d.y0})`);
 
 	state_leaves.append("title")
-		.text(d => "State/Territory: " + d.data.state + "\nCases: " + d.value.toLocaleString("en-US") + " case(s)\nPercent of National Cases: " + ((d.value/root.value)*100).toFixed(2) + "%");
+		.text(d => `State/Territory: ${d.data.state}\nCases: ${d.value.toLocaleString("en-US")} case(s)\nPercent of National Cases: ${((d.value/root.value)*100).toFixed(2)}%`);
 
 	state_leaves.append("rect")
 		.attr("id", (d, i) => (d.leafId = "leaf-" + (i+1)))
@@ -43,16 +43,16 @@ export const treemapSetup = (map_svg, state_date, width, height) => {
 	state_leaves.append("clipPath")
 		.attr("id", (d, i) => (d.clipId = "clip-" + (i+1)))
 		.append("use")
-			.attr("xlink:href", d => ("#" + d.leafId));
+			.attr("xlink:href", d => `#${d.leafId}`);
 	
 	state_leaves.append("text")
-	.attr("clip-path", d => ("url(#" + d.clipId + ")"))
+	.attr("clip-path", d => `url(#${d.clipId})`)
 	.attr("class", "title-size")
     .selectAll("tspan")
 	.data(d => d.data.state.split(" ")) // Had to add split here. Without it, d3 would loop through every char in the state string
 	.enter().append("tspan")
 		.attr("x", 2)
-		.attr("y", (d, i, nodes) => (((i === nodes.length - 1) * 0.3 + 1.1 + i * 0.9) + "em"))
+		.attr("y", (d, i, nodes) => `${((i === nodes.length - 1) * 0.3 + 1.1 + i * 0.9)}em`)
 		.attr("fill-opacity", 0.85)
 			.text(d => d);
 }
